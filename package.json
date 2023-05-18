@@ -4,21 +4,20 @@
   "version": "0.0.0",
   "type": "module",
   "lint-staged": {
-       "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
-     ]
-   },
+    ]
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
-
   },
   "husky": {
-        "hooks": {
-       "pre-commit": "lint-staged"
-     }
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "husky": "^8.0.3",
@@ -26,6 +25,7 @@
     "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.2",
     "socket.io-client": "^4.6.1"
   },
   "devDependencies": {

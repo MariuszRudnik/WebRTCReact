@@ -1,15 +1,29 @@
-import {connectWithWebSocket} from "./utils/wssConnection/wssConnection.ts";
-import {useEffect} from "react";
+import { connectWithWebSocket } from './utils/wssConnection/wssConnection.ts';
+import { useEffect } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Dashboard from './Dashboard/Dashboard.tsx';
+import LoginPage from './LoginPage/LoginPage.tsx';
+
+const router = createBrowserRouter([
+  {
+    path: '/dashboard',
+    element: <Dashboard />
+  },
+  {
+    path: '/',
+    element: <LoginPage />
+  }
+]);
 
 function App() {
-    useEffect(()=>{
-        connectWithWebSocket()
-    },[])
+  useEffect(() => {
+    connectWithWebSocket();
+  }, []);
   return (
     <>
-     Hello this i react app
+      <RouterProvider router={router} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
