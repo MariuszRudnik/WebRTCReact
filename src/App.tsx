@@ -21,7 +21,9 @@ function App() {
   }, []);
   return (
     <>
-      <RouterProvider router={router} />
+      <div className="background_main_color">
+        <RouterProvider router={router} />
+      </div>
     </>
   );
 }
