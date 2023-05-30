@@ -6,12 +6,15 @@ import SubmitButton from './components/SubmitButton.tsx';
 import { useNavigate } from 'react-router-dom';
 import { setUserName } from '../store/actions/dashboardActions.ts';
 import { useDispatch } from 'react-redux';
+import { registerNewUser } from '../utils/wssConnection/wssConnection.ts';
 
 const LoginPage = () => {
   const [userName, setUsername] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmitButtonPressed = () => {
+    console.log(userName);
+    registerNewUser(userName);
     dispatch(setUserName(userName));
     navigate('/dashboard');
   };

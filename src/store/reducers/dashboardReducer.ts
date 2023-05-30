@@ -1,7 +1,8 @@
 import * as dashboardActions from '../actions/dashboardActions.ts';
 
 const initState = {
-  username: ''
+  username: '',
+  activeUsers: []
 };
 const reducer = (state = initState, action: any) => {
   switch (action.type) {
@@ -9,6 +10,11 @@ const reducer = (state = initState, action: any) => {
       return {
         ...state,
         username: action.username
+      };
+    case dashboardActions.DASHBOARD_SET_ACTIVE_USERS:
+      return {
+        ...state,
+        activeUsers: action.activeUsers
       };
     default:
       return state;
