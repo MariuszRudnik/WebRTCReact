@@ -3,7 +3,21 @@ import { useEffect, useRef } from 'react';
 interface LocalVideoViewProps {
   localStream: MediaStream;
 }
-const styles = {
+interface Styler {
+  videoContainer: {
+    width: string;
+    height: string;
+    borderRadius: string;
+    position: 'absolute' | undefined;
+    top: string;
+    right: string;
+  };
+  videoElement: {
+    width: string;
+    height: string;
+  };
+}
+const styles: Styler = {
   videoContainer: {
     width: '150px',
     height: '150px',

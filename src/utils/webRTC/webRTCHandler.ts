@@ -1,4 +1,4 @@
-import { setLocalStream } from '../../store/actions/callActions.ts';
+import { callStates, setCallState, setLocalStream } from '../../store/actions/callActions.ts';
 import store from '../../store/store.ts';
 
 const defaultContains = {
@@ -9,7 +9,10 @@ const defaultContains = {
 export const getLocalStream = () => {
   navigator.mediaDevices
     .getUserMedia(defaultContains)
-    .then((stram) => store.dispatch(setLocalStream(stram)))
+    .then((stream) => {
+      store.dispatch(setLocalStream(stream));
+      store.dispatch(setCallState(callStates.CALL_AVAILABLE));
+    })
     .catch((err) => {
       console.log('error occure when trying to get an access to local stream');
       console.log(err);
