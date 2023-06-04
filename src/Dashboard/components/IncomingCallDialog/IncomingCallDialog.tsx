@@ -6,7 +6,7 @@ interface Props {
 
 const IncomingCallDialog = ({ callerUserName }: Props) => {
   const handleAcceptButtonPressed = () => {
-    console.log('ss');
+    console.log('ww');
   };
   const handleRejectButtonPressed = () => {
     console.log('ss');
