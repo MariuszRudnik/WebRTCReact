@@ -1,6 +1,10 @@
 import './IncomingCallDialog.css';
 
-const IncomingCallDialog = () => {
+interface Props {
+  callerUserName: string;
+}
+
+const IncomingCallDialog = ({ callerUserName }: Props) => {
   const handleAcceptButtonPressed = () => {
     console.log('ss');
   };
@@ -9,7 +13,7 @@ const IncomingCallDialog = () => {
   };
   return (
     <div className="direct_calling_dialog background_secondary_color">
-      <span className="direct_call_dialog_caller_name">Caller</span>
+      <span className="direct_call_dialog_caller_name">Caller : {callerUserName}</span>
       <div className="direct_call_dialog_button_container">
         <button className="direct_call_dialog_accept_button" onClick={handleAcceptButtonPressed}>
           Accept

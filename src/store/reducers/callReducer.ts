@@ -2,7 +2,9 @@ import * as callActions from '../actions/callActions.ts';
 
 const initState = {
   localStream: null,
-  callState: callActions.callStates.CALL_UNAVAILABLE
+  callState: callActions.callStates.CALL_UNAVAILABLE,
+  callingDialogVisible: false,
+  callerUserName: ''
 };
 const reducer = (state = initState, action: any) => {
   switch (action.type) {
@@ -16,7 +18,16 @@ const reducer = (state = initState, action: any) => {
         ...state,
         callState: action.callState
       };
-
+    case callActions.CALL_SET_CALLER_USERNAME:
+      return {
+        ...state,
+        callerUserName: action.callerUserName
+      };
+    case callActions.CALL_SET_CALLING_DIALOG_VISIBLE:
+      return {
+        ...state,
+        callingDialogVisible: action.visible
+      };
     default:
       return state;
   }

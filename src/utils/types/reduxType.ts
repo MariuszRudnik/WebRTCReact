@@ -11,3 +11,8 @@ export interface SockedTypes {
   userName: string;
   socketId: string;
 }
+
+export interface callRejectedDetailsInterface {
+  rejected: boolean;
+  reason: string;
+}

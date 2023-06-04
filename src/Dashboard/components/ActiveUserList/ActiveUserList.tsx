@@ -9,8 +9,8 @@ const ActiveUserList = () => {
   // console.log(stage);
   return (
     <div className="active_user_list_container">
-      {activeUsers.map((active: any) => (
-        <ActiveUserListItem key={active.sockedId} activeUser={active.userName} />
+      {activeUsers.map((activeUser: any) => (
+        <ActiveUserListItem key={activeUser.sockedId} activeUser={activeUser} />
       ))}
     </div>
   );
