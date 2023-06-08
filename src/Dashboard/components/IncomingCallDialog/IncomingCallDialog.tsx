@@ -1,15 +1,19 @@
 import './IncomingCallDialog.css';
+import {
+  acceptIncomingCallRequest,
+  rejectIncomingCallRequest
+} from '../../../utils/webRTC/webRTCHandler.ts';
 
 interface Props {
-  callerUserName: string;
+  callerUserName: string | undefined;
 }
 
 const IncomingCallDialog = ({ callerUserName }: Props) => {
   const handleAcceptButtonPressed = () => {
-    console.log('ww');
+    acceptIncomingCallRequest();
   };
   const handleRejectButtonPressed = () => {
-    console.log('ss');
+    rejectIncomingCallRequest();
   };
   return (
     <div className="direct_calling_dialog background_secondary_color">

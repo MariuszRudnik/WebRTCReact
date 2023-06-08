@@ -16,3 +16,8 @@ export interface callRejectedDetailsInterface {
   rejected: boolean;
   reason: string;
 }
+export interface WebRTCType {
+  offer?: any;
+  callerSocketId?: string | null;
+  answer?: RTCSessionDescriptionInit;
+}

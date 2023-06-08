@@ -1,10 +1,15 @@
 import * as callActions from '../actions/callActions.ts';
+import { CALL_SET_CALL_REJECTED } from '../actions/callActions.ts';
 
 const initState = {
   localStream: null,
   callState: callActions.callStates.CALL_UNAVAILABLE,
   callingDialogVisible: false,
-  callerUserName: ''
+  callerUserName: '',
+  callRejected: {
+    rejected: false,
+    reason: ''
+  }
 };
 const reducer = (state = initState, action: any) => {
   switch (action.type) {
@@ -27,6 +32,11 @@ const reducer = (state = initState, action: any) => {
       return {
         ...state,
         callingDialogVisible: action.visible
+      };
+    case callActions.CALL_SET_CALL_REJECTED:
+      return {
+        ...state,
+        callRejected: action.callRejected
       };
     default:
       return state;
