@@ -19,7 +19,7 @@ export const sendPreOffer = (data: sendPreOfferType) => {
   socket.emit('pre-offer', data);
 };
 
-export const sendPreOfferAnswer = (data: { callerSocketId: string | null; answer: string }) => {
+export const sendPreOfferAnswer = (data: any) => {
   socket.emit('pre-offer-answer', data);
 };
 
@@ -52,15 +52,20 @@ export const connectWithWebSocket = () => {
   socket.on('pre-offer', (data: { callerSocketId: string; callerUserName: string }) => {
     webRTCHandler.handlePreOffer(data);
   });
-  socket.on('pre-offer-answer', (data: { answer: string }) => {
+  socket.on('pre-offer-answer', (data: any) => {
     console.log('pre-offer-answer by wss');
     webRTCHandler.handlePreOfferAnswer(data);
   });
   socket.on('webRTC-offer', (data: any) => {
     webRTCHandler.handleOffer(data);
   });
-  socket.on('webRTC-answer', (data: WebRTCType) => {
+  socket.on('webRTC-answer', (data: { answer: any }) => {
     webRTCHandler.handleAnswer(data);
+  });
+  socket.on('webRTC-candidate', (data: any) => {
+    console.log('ssss');
+    console.log(data);
+    webRTCHandler.handleCandidate(data);
   });
 };
 
@@ -69,9 +74,15 @@ export const registerNewUser = (userName: string) => {
 };
 
 export const sendWebRTCOffer = (data: any) => {
+  console.log('webRTC-offer');
   socket.emit('webRTC-offer', data);
 };
 
 export const sendWebRTCAnswer = (data: WebRTCType) => {
   socket.emit('webRTC-answer', data);
+};
+
+export const sendWebRTCCandidate = (data: any) => {
+  console.log('webRTC-candidate emint');
+  socket.emit('webRTC-candidate', data);
 };
