@@ -1,8 +1,5 @@
-import { useEffect, useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 
-interface LocalVideoViewProps {
-  localStream: MediaStream;
-}
 interface Styler {
   videoContainer: {
     width: string;
@@ -17,6 +14,7 @@ interface Styler {
     height: string;
   };
 }
+
 const styles: Styler = {
   videoContainer: {
     width: '150px',
@@ -32,19 +30,20 @@ const styles: Styler = {
   }
 };
 
-const LocalVideoView = (props: LocalVideoViewProps) => {
+const LocalVideoView = (props: any) => {
   const { localStream } = props;
-  const localVideoRef = useRef<HTMLVideoElement>(null);
+  const localVideoRef: any = useRef();
 
   useEffect(() => {
     if (localStream) {
-      const localVideo: HTMLVideoElement | any = localVideoRef.current;
+      const localVideo = localVideoRef.current;
       localVideo.srcObject = localStream;
       localVideo.onloadedmetadata = () => {
         localVideo.play();
       };
     }
   }, [localStream]);
+
   return (
     <div style={styles.videoContainer} className="background_secondary_color">
       <video style={styles.videoElement} ref={localVideoRef} autoPlay muted />

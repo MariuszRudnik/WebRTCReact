@@ -1,19 +1,20 @@
+import React from 'react';
 import './ActiveUserList.css';
-import ActiveUserListItem from './ActiveUserListItem.tsx';
-import { useSelector } from 'react-redux';
-import { DashboardStateTypes } from '../../../utils/types/reduxType.ts';
+import ActiveUsersListItem from './ActiveUserListItem.tsx';
+import { connect } from 'react-redux';
 
-const ActiveUserList = () => {
-  const activeUsers = useSelector((state: DashboardStateTypes) => state.dashboard.activeUsers);
-
-  // console.log(stage);
+const ActiveUsersList = ({ activeUsers }: any) => {
   return (
     <div className="active_user_list_container">
       {activeUsers.map((activeUser: any) => (
-        <ActiveUserListItem key={activeUser.sockedId} activeUser={activeUser} />
+        <ActiveUsersListItem key={activeUser.socketId} activeUser={activeUser} />
       ))}
     </div>
   );
 };
 
-export default ActiveUserList;
+const mapStateToProps = ({ dashboard }: any) => ({
+  ...dashboard
+});
+
+export default connect(mapStateToProps, null)(ActiveUsersList);

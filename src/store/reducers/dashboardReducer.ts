@@ -1,9 +1,10 @@
-import * as dashboardActions from '../actions/dashboardActions.ts';
+import * as dashboardActions from '../actions/dashboardActions';
 
 const initState = {
   username: '',
   activeUsers: []
 };
+
 const reducer = (state = initState, action: any) => {
   switch (action.type) {
     case dashboardActions.DASHBOARD_SET_USERNAME:

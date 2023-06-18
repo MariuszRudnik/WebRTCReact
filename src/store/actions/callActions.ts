@@ -1,48 +1,58 @@
-import { callRejectedDetailsInterface } from '../../utils/types/reduxType.ts';
-
-export const CALL_SET_LOCAL_STREAM = 'CALL.SET_LOCAL_STREAM';
-export const CALL_SET_CALL_STATE = 'CALL.SET_CALL_STATE';
-export const CALL_SET_CALLER_USERNAME = 'CALL_SET_CALLER_USERNAME';
-export const CALL_SET_CALLING_DIALOG_VISIBLE = 'CALL.SET_CALLING_DIALOG_VISIBLE';
-export const CALL_SET_CALL_REJECTED = 'CALL.SET_CALL_REJECTED';
-
 export const callStates = {
   CALL_UNAVAILABLE: 'CALL_UNAVAILABLE',
   CALL_AVAILABLE: 'CALL_AVAILABLE',
   CALL_REQUESTED: 'CALL_REQUESTED',
   CALL_IN_PROGRESS: 'CALL_IN_PROGRESS'
 };
-export const setLocalStream = (localStream: MediaStream) => {
+
+export const CALL_SET_LOCAL_STREAM = 'CALL.SET_LOCAL_STREAM';
+export const CALL_SET_CALL_STATE = 'CALL.SET_CALL_STATE';
+export const CALL_SET_CALLING_DIALOG_VISIBLE = 'CALL.SET_CALLING_DIALOG_VISIBLE';
+export const CALL_SET_CALLER_USERNAME = 'CALL.SET_CALLER_USERNAME';
+export const CALL_SET_CALL_REJECTED = 'CALL.SET_CALL_REJECTED';
+export const CALL_SET_REMOTE_STREAM = 'CALL.SET_REMOTE_STREAM';
+
+export const setLocalStream = (localStream: any) => {
   return {
     type: CALL_SET_LOCAL_STREAM,
     localStream
   };
 };
 
-export const setCallState = (callState: string) => {
+export const setCallState = (callState: any) => {
   return {
     type: CALL_SET_CALL_STATE,
     callState
   };
 };
-export const setCallingDialogVisible = (visible: boolean) => {
+
+export const setCallingDialogVisible = (visible: any) => {
   return {
     type: CALL_SET_CALLING_DIALOG_VISIBLE,
     visible
   };
 };
-export const setCallerUserName = (callerUserName: string) => {
+
+export const setCallerUsername = (callerUsername: any) => {
   return {
     type: CALL_SET_CALLER_USERNAME,
-    callerUserName
+    callerUsername
   };
 };
-export const setCallRejected = (callRejectedDetails: callRejectedDetailsInterface) => {
+
+export const setCallRejected = (callRejectedDetails: any) => {
   return {
     type: CALL_SET_CALL_REJECTED,
     callRejected: {
       rejected: callRejectedDetails.rejected,
       reason: callRejectedDetails.reason
     }
+  };
+};
+
+export const setRemoteStream = (remoteStream: any) => {
+  return {
+    type: CALL_SET_REMOTE_STREAM,
+    remoteStream
   };
 };

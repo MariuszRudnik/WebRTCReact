@@ -1,16 +1,17 @@
-import * as callActions from '../actions/callActions.ts';
-import { CALL_SET_CALL_REJECTED } from '../actions/callActions.ts';
+import * as callActions from '../actions/callActions';
 
 const initState = {
   localStream: null,
   callState: callActions.callStates.CALL_UNAVAILABLE,
   callingDialogVisible: false,
-  callerUserName: '',
+  callerUsername: '',
   callRejected: {
     rejected: false,
     reason: ''
-  }
+  },
+  remoteStream: null
 };
+
 const reducer = (state = initState, action: any) => {
   switch (action.type) {
     case callActions.CALL_SET_LOCAL_STREAM:
@@ -23,20 +24,25 @@ const reducer = (state = initState, action: any) => {
         ...state,
         callState: action.callState
       };
-    case callActions.CALL_SET_CALLER_USERNAME:
-      return {
-        ...state,
-        callerUserName: action.callerUserName
-      };
     case callActions.CALL_SET_CALLING_DIALOG_VISIBLE:
       return {
         ...state,
         callingDialogVisible: action.visible
       };
+    case callActions.CALL_SET_CALLER_USERNAME:
+      return {
+        ...state,
+        callerUsername: action.callerUsername
+      };
     case callActions.CALL_SET_CALL_REJECTED:
       return {
         ...state,
         callRejected: action.callRejected
+      };
+    case callActions.CALL_SET_REMOTE_STREAM:
+      return {
+        ...state,
+        remoteStream: action.remoteStream
       };
     default:
       return state;

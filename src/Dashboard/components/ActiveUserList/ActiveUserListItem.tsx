@@ -1,24 +1,24 @@
+import React from 'react';
 import userAvatar from '../../../assets/userAvatar.png';
-import { callToOtherUser } from '../../../utils/webRTC/webRTCHandler.ts';
+import { callToOtherUser } from '../../../utils/webRTC/webRTCHandler';
 
-const ActiveUserListItem = (props: any) => {
+const ActiveUsersListItem = (props: any) => {
   const { activeUser } = props;
-  console.log('active UsR');
-  console.log(props);
+
   const handleListItemPressed = () => {
     callToOtherUser(activeUser);
   };
+
+  console.log(activeUser);
+
   return (
-    <div
-      className="active_user_list_item"
-      onClick={handleListItemPressed}
-      key={activeUser.socketId}>
+    <div className="active_user_list_item" onClick={handleListItemPressed}>
       <div className="active_user_list_image_container">
-        <img className="active_user_list_image" src={userAvatar} alt="" />
+        <img className="active_user_list_image" src={userAvatar} />
       </div>
-      <span className="active_user_list_text">{activeUser.userName}</span>
+      <span className="active_user_list_text">{activeUser.username}</span>
     </div>
   );
 };
 
-export default ActiveUserListItem;
+export default ActiveUsersListItem;
