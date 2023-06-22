@@ -9,8 +9,6 @@ const ActiveUsersListItem = (props: any) => {
     callToOtherUser(activeUser);
   };
 
-  console.log(activeUser);
-
   return (
     <div className="active_user_list_item" onClick={handleListItemPressed}>
       <div className="active_user_list_image_container">

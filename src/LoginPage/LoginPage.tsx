@@ -15,7 +15,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const handleSubmitButtonPressed = () => {
     registerNewUser(username);
-    console.log(username);
+
     dispatch(setUserName(username));
     navigate('/dashboard');
   };

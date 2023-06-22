@@ -6,7 +6,8 @@ import {
   setCallingDialogVisible,
   setCallerUsername,
   setCallRejected,
-  setRemoteStream
+  setRemoteStream,
+  setScreenSharingActive
 } from '../../store/actions/callActions';
 import * as wss from '../wssConnection/wssConnection';
 
@@ -29,8 +30,8 @@ const configuration = {
   ]
 };
 
-let connectedUserSocketId;
-let peerConnection;
+let connectedUserSocketId: string | null;
+let peerConnection: any;
 
 export const getLocalStream = () => {
   navigator.mediaDevices
@@ -55,11 +56,11 @@ const createPeerConnection = () => {
     peerConnection.addTrack(track, localStream);
   }
 
-  peerConnection.ontrack = ({ streams: [stream] }) => {
+  peerConnection.ontrack = ({ streams: [stream] }: any) => {
     store.dispatch(setRemoteStream(stream));
   };
 
-  peerConnection.onicecandidate = (event) => {
+  peerConnection.onicecandidate = (event: any) => {
     console.log('geeting candidates from stun server');
     if (event.candidate) {
       wss.sendWebRTCCandidate({
@@ -69,14 +70,14 @@ const createPeerConnection = () => {
     }
   };
 
-  peerConnection.onconnectionstatechange = (event) => {
+  peerConnection.onconnectionstatechange = (event: any) => {
     if (peerConnection.connectionState === 'connected') {
       console.log('succesfully connected with other peer');
     }
   };
 };
 
-export const callToOtherUser = (calleeDetails) => {
+export const callToOtherUser = (calleeDetails: any) => {
   connectedUserSocketId = calleeDetails.socketId;
   store.dispatch(setCallState(callStates.CALL_IN_PROGRESS));
   store.dispatch(setCallingDialogVisible(true));
@@ -88,7 +89,7 @@ export const callToOtherUser = (calleeDetails) => {
   });
 };
 
-export const handlePreOffer = (data) => {
+export const handlePreOffer = (data: any) => {
   if (checkIfCallIsPossible()) {
     connectedUserSocketId = data.callerSocketId;
     store.dispatch(setCallerUsername(data.callerUsername));
@@ -118,7 +119,7 @@ export const rejectIncomingCallRequest = () => {
   resetCallData();
 };
 
-export const handlePreOfferAnswer = (data) => {
+export const handlePreOfferAnswer = (data: any) => {
   store.dispatch(setCallingDialogVisible(false));
 
   if (data.answer === preOfferAnswers.CALL_ACCEPTED) {
@@ -150,7 +151,7 @@ const sendOffer = async () => {
   });
 };
 
-export const handleOffer = async (data) => {
+export const handleOffer = async (data: any) => {
   await peerConnection.setRemoteDescription(data.offer);
   const answer = await peerConnection.createAnswer();
   await peerConnection.setLocalDescription(answer);
@@ -160,11 +161,11 @@ export const handleOffer = async (data) => {
   });
 };
 
-export const handleAnswer = async (data) => {
+export const handleAnswer = async (data: any) => {
   await peerConnection.setRemoteDescription(data.answer);
 };
 
-export const handleCandidate = async (data) => {
+export const handleCandidate = async (data: any) => {
   try {
     console.log('adding ice candidates');
     await peerConnection.addIceCandidate(data.candidate);
@@ -187,4 +188,31 @@ export const checkIfCallIsPossible = () => {
 export const resetCallData = () => {
   connectedUserSocketId = null;
   store.dispatch(setCallState(callStates.CALL_AVAILABLE));
+};
+let screenSharingStream: any;
+export const switchForScreenSharingStream = async () => {
+  if (!store.getState().call.screenSharingActive) {
+    try {
+      screenSharingStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      store.dispatch(setScreenSharingActive(true));
+      const senders = peerConnection.getSenders();
+      const sender = senders.find(
+        (sender: any) => sender.track.kind == screenSharingStream.getVideoTracks()[0].kind
+      );
+      sender.replaceTrack(screenSharingStream.getVideoTracks()[0]);
+    } catch (err) {
+      console.log('Error occured when trying to get screensharing sream', err);
+    }
+  } else {
+    const localStream = store.getState().call.localStream;
+    const senders = peerConnection.getSenders();
+    const sender = senders.find(
+      (sender: any) => sender.track.kind == localStream.getVideoTracks()[0].kind
+    );
+    sender.replaceTrack(localStream.getVideoTracks()[0]);
+    sender.dispatch(setScreenSharingActive(false));
+    screenSharingStream.getTracks().forEach((track: any) => {
+      track.stop();
+    });
+  }
 };

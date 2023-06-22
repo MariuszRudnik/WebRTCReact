@@ -5,7 +5,13 @@ import RemoteVideoView from '../RemoteVideoView/RemoteVideoView';
 import CallRejectedDialog from '../CallRejectedDialog/CallRejectedDialog';
 import IncomingCallDialog from '../IncomingCallDialog/IncomingCallDialog';
 import CallingDialog from '../CllingDialog/CallingDialog.tsx';
-import { callStates, setCallRejected } from '../../../store/actions/callActions';
+import {
+  callStates,
+  setCallRejected,
+  setLocalCameraEnable,
+  setLocalMicrophoneEnable
+} from '../../../store/actions/callActions';
+import ConversationButtons from '../ConversationButtons/ConversationButtons.tsx';
 
 const DirectCall = (props: any) => {
   const {
@@ -32,6 +38,7 @@ const DirectCall = (props: any) => {
         <IncomingCallDialog callerUsername={callerUsername} />
       )}
       {callingDialogVisible && <CallingDialog />}
+      <ConversationButtons {...props} />
     </>
   );
 };
@@ -45,7 +52,9 @@ function mapStoreStateToProps({ call }: any) {
 function mapDispatchToProps(dispatch: any) {
   return {
     hideCallRejectedDialog: (callRejectedDetails: any) =>
-      dispatch(setCallRejected(callRejectedDetails))
+      dispatch(setCallRejected(callRejectedDetails)),
+    setCameraEnabled: (enabled: boolean) => dispatch(setLocalCameraEnable(enabled)),
+    setMicrophoneEnabled: (enabled: boolean) => dispatch(setLocalMicrophoneEnable(enabled))
   };
 }
 

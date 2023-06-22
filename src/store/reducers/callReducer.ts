@@ -9,7 +9,10 @@ const initState = {
     rejected: false,
     reason: ''
   },
-  remoteStream: null
+  remoteStream: null,
+  localCameraEnabled: true,
+  localMicrophoneEnable: true,
+  screenSharingActive: false
 };
 
 const reducer = (state = initState, action: any) => {
@@ -43,6 +46,21 @@ const reducer = (state = initState, action: any) => {
       return {
         ...state,
         remoteStream: action.remoteStream
+      };
+    case callActions.CALL_SET_LOCAL_CAMERA_ENABLE:
+      return {
+        ...state,
+        localCameraEnabled: action.enabled
+      };
+    case callActions.CALL_SET_LOCAL_MICROPHONE_ENABLE:
+      return {
+        ...state,
+        localMicrophoneEnable: action.enabled
+      };
+    case callActions.CALL_SET_SCREEN_SHARING_ACTIVE:
+      return {
+        ...state,
+        screenSharingActive: action.active
       };
     default:
       return state;
