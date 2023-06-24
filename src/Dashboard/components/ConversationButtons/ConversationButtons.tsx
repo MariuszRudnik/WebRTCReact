@@ -6,7 +6,7 @@ import { MdVideocam } from '@react-icons/all-files/md/MdVideocam';
 import { MdVideoLabel } from '@react-icons/all-files/md/MdVideoLabel';
 import { MdMicOff } from '@react-icons/all-files/md/MdMicOff';
 import { MdVideocamOff } from '@react-icons/all-files/md/MdVideocamOff';
-import { switchForScreenSharingStream } from '../../../utils/webRTC/webRTCHandler.ts';
+import { hangUp, switchForScreenSharingStream } from '../../../utils/webRTC/webRTCHandler.ts';
 import { MdCamera } from '@react-icons/all-files/md/MdCamera';
 
 const style: any = {
@@ -44,13 +44,16 @@ const ConversationButtons = (props: any) => {
     localStream.getVideoTracks()[0].enabled = !cameraEnabled;
     setCameraEnabled(!cameraEnabled);
   };
+  const handleHangedUpButtonPressed = () => {
+    hangUp();
+  };
   console.log(screenSharingActive);
   return (
     <div style={style.buttonContainer}>
       <ConversationButton coClickHandler={handleMicButtonPressed}>
         {localMicrophoneEnable ? <MdMic style={style.icon} /> : <MdMicOff style={style.icon} />}
       </ConversationButton>
-      <ConversationButton>
+      <ConversationButton coClickHandler={handleHangedUpButtonPressed}>
         <MdCallEnd style={style.icon} />
       </ConversationButton>
       <ConversationButton coClickHandler={handleCameraButtonPressed}>

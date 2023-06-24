@@ -216,3 +216,21 @@ export const switchForScreenSharingStream = async () => {
     });
   }
 };
+
+export const handleUserHangUp = () => {
+  resetCallDataAfterHandUp();
+};
+
+export const hangUp = () => {
+  wss.sendUserHangedUp({
+    connectedUserSocketId: connectedUserSocketId
+  });
+  resetCallDataAfterHandUp();
+};
+
+const resetCallDataAfterHandUp = () => {
+  store.dispatch(setRemoteStream(null));
+  peerConnection.close();
+  createPeerConnection();
+  resetCallData();
+};
