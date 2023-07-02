@@ -10,6 +10,8 @@ import DashboardInformation from './components/DashboardInformation/DashboardInf
 import { connect } from 'react-redux';
 import { connectWithMyPeer } from '../utils/webRTC/webRTCGroupCallHandler.ts';
 import GroupCallRoomsList from './components/GroupCallRoomsList/GroupCallRoomsList.tsx';
+import GroupCall from './components/GrupCall/GroupCall.tsx';
+import { callStates } from '../store/actions/callActions.ts';
 
 const Dashboard = ({ username, callState }: any) => {
   useEffect(() => {
@@ -22,7 +24,10 @@ const Dashboard = ({ username, callState }: any) => {
       <div className="dashboard_left_section">
         <div className="dashboard_content_container">
           <DirectCall />
-          {callState !== callState.CALL_IN_PROGRESS && <DashboardInformation username={username} />}
+          <GroupCall />
+          {callState !== callStates.CALL_IN_PROGRESS && (
+            <DashboardInformation username={username} />
+          )}
         </div>
         <div className="dashboard_rooms_container background_secondary_color">
           <GroupCallRoomsList />

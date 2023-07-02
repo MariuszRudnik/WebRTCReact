@@ -8,7 +8,6 @@ interface Props {
 
 function GroupCallRoomsListItem(props: any) {
   const { room } = props;
-  console.log(room);
   const handleListItemPressed = () => {
     console.log('Hellow ');
   };
