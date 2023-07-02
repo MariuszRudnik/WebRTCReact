@@ -62,6 +62,16 @@ const reducer = (state = initState, action: any) => {
         ...state,
         screenSharingActive: action.active
       };
+    case callActions.CALL_RESET_CALL_STATE:
+      return {
+        ...state,
+        remoteStream: null,
+        screenSharingActive: false,
+        callerUsername: '',
+        localMicrophoneEnable: true,
+        localCameraEnabled: true,
+        callingDialogVisible: false
+      };
     default:
       return state;
   }
