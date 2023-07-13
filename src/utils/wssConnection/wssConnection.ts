@@ -2,6 +2,7 @@ import socketClient from 'socket.io-client';
 import store from '../../store/store';
 import * as dashboardActions from '../../store/actions/dashboardActions';
 import * as webRTCHandler from '../webRTC/webRTCHandler';
+import * as webRTCGroupCallHandler from '../webRTC/webRTCGroupCallHandler.ts';
 
 const SERVER = 'http://localhost:4000';
 
@@ -46,6 +47,10 @@ export const connectWithWebSocket = () => {
   socket.on('user-hanged-up', () => {
     webRTCHandler.handleUserHangUp();
   });
+  // listening related with group calls
+  socket.on('group-call-join-request', (data: any) => {
+    webRTCGroupCallHandler.connectToNewUser(data);
+  });
 };
 
 export const registerNewUser = (username) => {
@@ -85,6 +90,9 @@ const handleBroadcastEvents = (data) => {
       );
       store.dispatch(dashboardActions.setActiveUsers(activeUsers));
       break;
+    case broadcastEventTypes.GROUP_CALL_ROOMS:
+      store.dispatch(dashboardActions.setGroupCalls(data.groupCallRooms));
+      break;
     default:
       break;
   }
@@ -92,4 +100,12 @@ const handleBroadcastEvents = (data) => {
 
 export const sendUserHangedUp = (data: { connectedUserSocketId: string }) => {
   socket.emit('user-hanged-up', data);
+};
+
+export const registerGroupCall = (data: any) => {
+  socket.emit('group-call-register', data);
+};
+
+export const userWantsToJoinGroupCall = (data: any) => {
+  socket.emit('group-call-joni-request', data);
 };

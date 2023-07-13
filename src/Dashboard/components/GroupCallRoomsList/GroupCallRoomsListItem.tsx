@@ -1,5 +1,6 @@
 import React from 'react';
 import './GroupCallRoomsList.css';
+import * as webRTCGroupCallHandler from '../../../utils/webRTC/webRTCGroupCallHandler.ts';
 
 interface Props {
   hostName: string;
@@ -9,7 +10,7 @@ interface Props {
 function GroupCallRoomsListItem(props: any) {
   const { room } = props;
   const handleListItemPressed = () => {
-    console.log('Hellow ');
+    webRTCGroupCallHandler.joinGroupCall(room.socketId, room.roomId);
   };
 
   return (

@@ -10,7 +10,7 @@ import DashboardInformation from './components/DashboardInformation/DashboardInf
 import { connect } from 'react-redux';
 import { connectWithMyPeer } from '../utils/webRTC/webRTCGroupCallHandler.ts';
 import GroupCallRoomsList from './components/GroupCallRoomsList/GroupCallRoomsList.tsx';
-import GroupCall from './components/GrupCall/GroupCall.tsx';
+import GroupCall from './components/GroupCall/GroupCall.tsx';
 import { callStates } from '../store/actions/callActions.ts';
 
 const Dashboard = ({ username, callState }: any) => {
