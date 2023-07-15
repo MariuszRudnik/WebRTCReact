@@ -4,14 +4,16 @@ import * as wss from '../wssConnection/wssConnection.ts';
 import { registerGroupCall, userWantsToJoinGroupCall } from '../wssConnection/wssConnection.ts';
 import {
   callStates,
+  clearGroupCallData,
   setCallState,
   setGroupCallActive,
   setGroupCallInComingStreams
 } from '../../store/actions/callActions.ts';
 import { setGroupCalls } from '../../store/actions/dashboardActions.ts';
 
-let myPeer;
+let myPeer: any;
 let myPeerId: any;
+let groupCallRoomId: any;
 export const connectWithMyPeer = () => {
   myPeer = new Peer(undefined, { path: '/peerjs', host: '/', port: 4000 });
   myPeer.on('open', (id) => {
@@ -41,6 +43,7 @@ export const createNewGroupCall = () => {
 };
 export const joinGroupCall = (hostSocketId: any, roomId: any) => {
   const localStream = store.getState().call.localStream;
+  groupCallRoomId = roomId;
 
   wss.userWantsToJoinGroupCall({
     peerId: myPeerId,
@@ -65,6 +68,25 @@ export const connectToNewUser = (data: any) => {
     console.log('stream came');
   });
 };
+export const leaveGroupCall = () => {
+  console.log('leaveGroupCall');
+  wss.userLeftGroupCall({
+    streamId: store.getState().call.localStream.id,
+    roomId: groupCallRoomId
+  });
+  groupCallRoomId = null;
+  store.dispatch(clearGroupCallData());
+  myPeer.destroy();
+  connectWithMyPeer();
+};
+
+export const removeInactiveStream = (data: any) => {
+  const groupCallStreams = store
+    .getState()
+    .call.groupCallStreams.filter((stream: any) => stream.id !== data.streamId);
+  store.dispatch(setGroupCallInComingStreams(groupCallStreams));
+};
+
 const addVideoStream = (incomingStream: any) => {
   const groupCallStreams = [...store.getState().call.groupCallStreams, incomingStream];
   store.dispatch(setGroupCallInComingStreams(groupCallStreams));

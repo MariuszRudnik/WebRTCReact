@@ -51,6 +51,9 @@ export const connectWithWebSocket = () => {
   socket.on('group-call-join-request', (data: any) => {
     webRTCGroupCallHandler.connectToNewUser(data);
   });
+  socket.on('group-call-user-left', (data: any) => {
+    webRTCGroupCallHandler.removeInactiveStream(data);
+  });
 };
 
 export const registerNewUser = (username) => {
@@ -108,4 +111,7 @@ export const registerGroupCall = (data: any) => {
 
 export const userWantsToJoinGroupCall = (data: any) => {
   socket.emit('group-call-joni-request', data);
+};
+export const userLeftGroupCall = (data: any) => {
+  socket.emit('group-call-user-left', data);
 };
