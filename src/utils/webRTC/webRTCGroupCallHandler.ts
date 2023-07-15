@@ -2,7 +2,12 @@ import Peer from 'peerjs';
 import store from '../../store/store.ts';
 import * as wss from '../wssConnection/wssConnection.ts';
 import { registerGroupCall, userWantsToJoinGroupCall } from '../wssConnection/wssConnection.ts';
-import { callStates, setCallState, setGroupCallActive } from '../../store/actions/callActions.ts';
+import {
+  callStates,
+  setCallState,
+  setGroupCallActive,
+  setGroupCallInComingStreams
+} from '../../store/actions/callActions.ts';
 import { setGroupCalls } from '../../store/actions/dashboardActions.ts';
 
 let myPeer;
@@ -16,6 +21,12 @@ export const connectWithMyPeer = () => {
   myPeer.on('call', (call) => {
     call.answer(store.getState().call.localStream);
     call.on('stream', (incomingStream) => {
+      const streams = store.getState().call.groupCallStreams;
+      const stream = streams.find((stream: any) => stream.id === incomingStream.id);
+
+      if (!stream) {
+        addVideoStream(incomingStream);
+      }
       console.log('stram came');
     });
   });
@@ -45,6 +56,16 @@ export const connectToNewUser = (data: any) => {
 
   const call = myPeer.call(data.peerId, localStream);
   call.on('stream', (incomingStream: any) => {
+    const streams = store.getState().call.groupCallStreams;
+    const stream = streams.find((stream: any) => stream.id === incomingStream.id);
+
+    if (!stream) {
+      addVideoStream(incomingStream);
+    }
     console.log('stream came');
   });
+};
+const addVideoStream = (incomingStream: any) => {
+  const groupCallStreams = [...store.getState().call.groupCallStreams, incomingStream];
+  store.dispatch(setGroupCallInComingStreams(groupCallStreams));
 };
