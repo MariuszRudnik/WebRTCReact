@@ -8,7 +8,8 @@ import {
   setCallRejected,
   setRemoteStream,
   setScreenSharingActive,
-  resetCallDateState
+  resetCallDateState,
+  setMessage
 } from '../../store/actions/callActions';
 import * as wss from '../wssConnection/wssConnection';
 
@@ -33,6 +34,7 @@ const configuration = {
 
 let connectedUserSocketId: string | null;
 let peerConnection: any;
+let dataChannel: any;
 
 export const getLocalStream = () => {
   navigator.mediaDevices
@@ -60,7 +62,21 @@ const createPeerConnection = () => {
   peerConnection.ontrack = ({ streams: [stream] }: any) => {
     store.dispatch(setRemoteStream(stream));
   };
-
+  // incoming data channel messages
+  peerConnection.ondatachannel = (event) => {
+    const dataChannel = event.channel;
+    dataChannel.onopen = () => {
+      console.log('peer connection is open to receive data channel messages');
+    };
+    dataChannel.onmessage = (event: any) => {
+      console.log('onsage');
+      store.dispatch(setMessage(true, event.data));
+    };
+  };
+  dataChannel = peerConnection.createDataChannel('chat');
+  dataChannel.onopen = () => {
+    console.log('data chanle');
+  };
   peerConnection.onicecandidate = (event: any) => {
     console.log('geeting candidates from stun server');
     if (event.candidate) {
@@ -244,4 +260,8 @@ const resetCallDataAfterHandUp = () => {
       track.stop();
     });
   }
+};
+
+export const sendMessageUsingDataChannel = (message: any) => {
+  dataChannel.send(message);
 };

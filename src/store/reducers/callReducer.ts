@@ -14,7 +14,11 @@ const initState = {
   localMicrophoneEnable: true,
   screenSharingActive: false,
   groupCallActive: false,
-  groupCallStreams: []
+  groupCallStreams: [],
+  message: {
+    received: false,
+    content: ''
+  }
 };
 
 const reducer = (state = initState, action: any) => {
@@ -92,6 +96,11 @@ const reducer = (state = initState, action: any) => {
         callState: callActions.callStates.CALL_AVAILABLE,
         localCameraEnabled: true,
         localMicrophoneEnable: true
+      };
+    case callActions.CALL_SET_CHAT_MESSAGE:
+      return {
+        ...state,
+        message: action.message
       };
 
     default:
