@@ -4,7 +4,8 @@ import ConversationButtons from '../ConversationButtons/ConversationButtons.tsx'
 // import * as stream from 'stream';
 import GroupCallVideo from './GroupCallVideo.tsx';
 
-function GroupCallRoom({ groupCallStreams }: any) {
+function GroupCallRoom(props: any) {
+  const { groupCallStreams } = props;
   return (
     <div className="group_call_room_container">
       <span className="group_call_title">Group Call</span>
@@ -13,7 +14,7 @@ function GroupCallRoom({ groupCallStreams }: any) {
           return <GroupCallVideo key={stream.id} stream={stream} />;
         })}
       </div>
-      <ConversationButtons />
+      <ConversationButtons {...props} groupCall />
     </div>
   );
 }
