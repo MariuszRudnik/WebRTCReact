@@ -21,28 +21,28 @@ export const connectWithWebSocket = () => {
     console.log('succesfully connected with wss server');
   });
 
-  socket.on('broadcast', (data) => {
+  socket.on('broadcast', (data: any) => {
     handleBroadcastEvents(data);
   });
 
   // listeners related with direct call
-  socket.on('pre-offer', (data) => {
+  socket.on('pre-offer', (data: any) => {
     webRTCHandler.handlePreOffer(data);
   });
 
-  socket.on('pre-offer-answer', (data) => {
+  socket.on('pre-offer-answer', (data: any) => {
     webRTCHandler.handlePreOfferAnswer(data);
   });
 
-  socket.on('webRTC-offer', (data) => {
+  socket.on('webRTC-offer', (data: any) => {
     webRTCHandler.handleOffer(data);
   });
 
-  socket.on('webRTC-answer', (data) => {
+  socket.on('webRTC-answer', (data: any) => {
     webRTCHandler.handleAnswer(data);
   });
 
-  socket.on('webRTC-candidate', (data) => {
+  socket.on('webRTC-candidate', (data: any) => {
     webRTCHandler.handleCandidate(data);
   });
   socket.on('user-hanged-up', () => {
@@ -57,7 +57,7 @@ export const connectWithWebSocket = () => {
   });
 };
 
-export const registerNewUser = (username) => {
+export const registerNewUser = (username: any) => {
   socket.emit('register-new-user', {
     username: username,
     socketId: socket.id
@@ -66,40 +66,40 @@ export const registerNewUser = (username) => {
 
 // emitting events to server related with direct call
 
-export const sendPreOffer = (data) => {
+export const sendPreOffer = (data: any) => {
   socket.emit('pre-offer', data);
 };
 
-export const sendPreOfferAnswer = (data) => {
+export const sendPreOfferAnswer = (data: any) => {
   socket.emit('pre-offer-answer', data);
 };
 
-export const sendWebRTCOffer = (data) => {
+export const sendWebRTCOffer = (data: any) => {
   socket.emit('webRTC-offer', data);
 };
 
-export const sendWebRTCAnswer = (data) => {
+export const sendWebRTCAnswer = (data: any) => {
   socket.emit('webRTC-answer', data);
 };
 
-export const sendWebRTCCandidate = (data) => {
+export const sendWebRTCCandidate = (data: any) => {
   socket.emit('webRTC-candidate', data);
 };
 
-const handleBroadcastEvents = (data) => {
+const handleBroadcastEvents = (data: any) => {
   switch (data.event) {
     case broadcastEventTypes.ACTIVE_USERS:
       const activeUsers = data.activeUsers.filter(
-        (activeUser) => activeUser.socketId !== socket.id
+        (activeUser: any) => activeUser.socketId !== socket.id
       );
       store.dispatch(dashboardActions.setActiveUsers(activeUsers));
       break;
     case broadcastEventTypes.GROUP_CALL_ROOMS:
-      const groupCallRooms = data.groupCallRooms.filter((room) => room.socketId !== socket.id);
+      const groupCallRooms = data.groupCallRooms.filter((room: any) => room.socketId !== socket.id);
       const activeGroupCallRoomId = webRTCGroupCallHandler.checkAtiveGroupCall();
 
       if (activeGroupCallRoomId) {
-        const room = groupCallRooms.find((room) => room.roomId === activeGroupCallRoomId);
+        const room = groupCallRooms.find((room: any) => room.roomId === activeGroupCallRoomId);
         if (!room) {
           webRTCGroupCallHandler.clearGroupData();
         }
@@ -111,7 +111,7 @@ const handleBroadcastEvents = (data) => {
   }
 };
 
-export const sendUserHangedUp = (data: { connectedUserSocketId: string }) => {
+export const sendUserHangedUp = (data: { connectedUserSocketId: any }) => {
   socket.emit('user-hanged-up', data);
 };
 

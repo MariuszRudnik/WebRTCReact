@@ -17,14 +17,15 @@ let groupCallRoomId: any;
 let groupCallHost: any;
 
 export const connectWithMyPeer = () => {
+  // @ts-ignore
   myPeer = new Peer(undefined, { path: '/peerjs', host: '/', port: 4000 });
-  myPeer.on('open', (id) => {
+  myPeer.on('open', (id: any) => {
     console.log('my peer is id' + id);
     myPeerId = id;
   });
-  myPeer.on('call', (call) => {
+  myPeer.on('call', (call: any) => {
     call.answer(store.getState().call.localStream);
-    call.on('stream', (incomingStream) => {
+    call.on('stream', (incomingStream: any) => {
       const streams = store.getState().call.groupCallStreams;
       const stream = streams.find((stream: any) => stream.id === incomingStream.id);
 
