@@ -12,7 +12,7 @@ const broadcastEventTypes = {
   GROUP_CALL_ROOMS: 'GROUP_CALL_ROOMS'
 };
 
-let socket;
+let socket: any;
 
 export const connectWithWebSocket = () => {
   socket = socketClient(SERVER);
