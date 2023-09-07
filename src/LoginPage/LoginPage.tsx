@@ -4,15 +4,19 @@ import { useState } from 'react';
 import UserNameButton from './components/UserNameButton.tsx';
 import SubmitButton from './components/SubmitButton.tsx';
 import { useNavigate } from 'react-router-dom';
-import { setUserName } from '../store/actions/dashboardActions.ts';
+
 import { useDispatch } from 'react-redux';
+import { registerNewUser } from '../utils/wssConnection/wssConnection.ts';
+import { setUsername as setUserName } from '../store/actions/dashboardActions.ts';
 
 const LoginPage = () => {
-  const [userName, setUsername] = useState('');
+  const [username, setUsername] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmitButtonPressed = () => {
-    dispatch(setUserName(userName));
+    registerNewUser(username);
+
+    dispatch(setUserName(username));
     navigate('/dashboard');
   };
   return (
@@ -24,7 +28,7 @@ const LoginPage = () => {
         <div className="login-page_title_container">
           <h2>Get on Board</h2>
         </div>
-        <UserNameButton username={userName} setUserName={setUsername} />
+        <UserNameButton username={username} setUserName={setUsername} />
         <SubmitButton handleSubmitButtonPressed={handleSubmitButtonPressed} />
       </div>
     </div>
