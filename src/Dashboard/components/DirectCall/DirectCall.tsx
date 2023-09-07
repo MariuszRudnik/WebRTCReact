@@ -66,7 +66,7 @@ function mapDispatchToProps(dispatch: any) {
       dispatch(setCallRejected(callRejectedDetails)),
     setCameraEnabled: (enabled: boolean) => dispatch(setLocalCameraEnable(enabled)),
     setMicrophoneEnabled: (enabled: boolean) => dispatch(setLocalMicrophoneEnable(enabled)),
-    setDirectCallMessage: (received, content) => dispatch(setMessage(received, content))
+    setDirectCallMessage: (received: any, content: any) => dispatch(setMessage(received, content))
   };
 }
 

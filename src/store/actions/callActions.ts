@@ -89,7 +89,7 @@ export const resetCallDateState = () => {
   };
 };
 
-export const setGroupCallActive = (active) => {
+export const setGroupCallActive = (active: any) => {
   return {
     type: CALL_SET_GROUP_CALL_ACTIVE,
     active
@@ -107,7 +107,7 @@ export const clearGroupCallData = () => {
     type: CALL_CLEAR_GROUP_CALL_DATA
   };
 };
-export const setMessage = (messageRecived, messageContent) => {
+export const setMessage = (messageRecived: any, messageContent: any) => {
   return {
     type: CALL_SET_CHAT_MESSAGE,
     message: {

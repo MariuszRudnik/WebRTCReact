@@ -63,7 +63,7 @@ const createPeerConnection = () => {
     store.dispatch(setRemoteStream(stream));
   };
   // incoming data channel messages
-  peerConnection.ondatachannel = (event) => {
+  peerConnection.ondatachannel = (event: any) => {
     const dataChannel = event.channel;
     dataChannel.onopen = () => {
       console.log('peer connection is open to receive data channel messages');
