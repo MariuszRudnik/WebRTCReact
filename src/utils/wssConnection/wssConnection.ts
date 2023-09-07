@@ -4,7 +4,8 @@ import * as dashboardActions from '../../store/actions/dashboardActions';
 import * as webRTCHandler from '../webRTC/webRTCHandler';
 import * as webRTCGroupCallHandler from '../webRTC/webRTCGroupCallHandler.ts';
 
-const SERVER = 'http://localhost:4000';
+const SERVER = import.meta.env.VITE_HTTP;
+console.log(SERVER);
 
 const broadcastEventTypes = {
   ACTIVE_USERS: 'ACTIVE_USERS',
