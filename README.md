@@ -1,7 +1,11 @@
 # WebRTCExpress - Komunikator z Wideo-Rozmowami
 
+
+
 ## Opis
 WebRTCExpress to komunikator z wideo-rozmowami, który opiera się na technologii WebRTC. Projekt powstał na podstawie kursu, ale zostały wprowadzone własne zmiany, aby dostosować go do indywidualnych potrzeb. Zajmowałem się implementacją interaktywnych funkcji oraz byłem odpowiedzialny za integrację front-endu napisanego w React i Vite z back-endem opartym na Express i Socket.io. Warto zaznaczyć, że oryginalny kurs był napisany w JavaScript i korzystał z Webpack, natomiast ten projekt korzysta z TypeScript i Vite.
+
+![Screen](./image.png)
 
 ## Technologie
 - React
@@ -24,8 +28,14 @@ Projekt wymaga jedynie środowiska Node.js do uruchomienia.
 
 ## Instalacja i uruchomienie
 1. Zainstaluj wszystkie zależności za pomocą komendy:
+
+```bash
 pnpm install
+```
 2. Uruchom backend.
 3. Uruchom projekt lokalnie za pomocą:
 
-pnpm run dev
+
+```bash
+  pnpm run dev
+```
